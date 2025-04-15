@@ -12,6 +12,7 @@
     "@apollo/client": "^3.13.7",
     "artisearch": "file:",
     "formik": "^2.4.6",
+    "graphql": "^16.10.0",
     "lucide-react": "^0.487.0",
     "next": "15.2.4",
     "node-fetch": "^3.3.2",

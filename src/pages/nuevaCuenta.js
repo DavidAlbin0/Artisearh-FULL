@@ -2,7 +2,20 @@ import React, { useState } from "react";
 import Layout from "../../components/layout";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useQuery, useMutation, gql } from "@apollo/client";
 
+//Obtener todos los post
+const QUERY = gql`
+query obtenerPostAll {
+  obtenerPostAll {
+    id
+    artista
+    imagen
+    descripcion
+    ubicacion
+  }
+}
+` 
 // Componente para inputs reutilizables
 const Campo = ({
   id,
@@ -194,7 +207,24 @@ const FormularioArtista = ({ setTipo, formikArt }) => {
         error={formikArt.errors.contrasena}
         touched={formikArt.touched.contrasena}
       />
-
+      <Campo
+        id="descripcion"
+        label="Descripcion"
+        placeholder="Descripcion"
+        values={formikArt.values.descripcion}
+        handleChange={formikArt.handleChange}
+        error={formikArt.errors.descripcion}
+        touched={formikArt.touched.descripcion}
+      />
+        <Campo
+        id="especialidad"
+        label="Especialidad"
+        placeholder="Especialidad"
+        values={formikArt.values.especialidad}
+        handleChange={formikArt.handleChange}
+        error={formikArt.errors.especialidad}
+        touched={formikArt.touched.especialidad}
+      />
       <BotonesFormulario
         volver={() => {
           formikArt.resetForm();
