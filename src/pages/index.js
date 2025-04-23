@@ -22,8 +22,10 @@ const ARTISTA = gql`
   query obtenerArtistaClick($id: ID!) {
     obtenerArtistaClick(id: $id) {
       id
+      nombreArtistico
       nombre
       apellidoP
+      apellidoM
       genero
       email
       telefono
@@ -89,7 +91,7 @@ export const index = () => {
             className="bg-white rounded-2xl shadow-md p-4 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
           >
             <img
-              src={post.imagen}
+              src={`data:image/jpeg;base64,${post.imagen}`}
               alt={post.descripcion}
               className="w-full h-48 object-cover rounded-xl mb-3"
             />
@@ -125,7 +127,7 @@ export const index = () => {
               &times;
             </button>
             <img
-              src={selectedPost.imagen}
+              src={`data:image/jpeg;base64,${selectedPost.imagen}`}
               alt={selectedPost.descripcion}
               className="w-full h-64 object-cover rounded-lg mb-4"
             />

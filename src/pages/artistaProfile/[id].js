@@ -5,14 +5,17 @@ const OBTENER_ARTISTA_CLICK = gql`
   query obtenerArtistaClick($id: ID!) {
     obtenerArtistaClick(id: $id) {
       id
+      nombreArtistico
       nombre
       apellidoP
+      apellidoM
       genero
       email
       telefono
       ubicacion
       descripcion
       especialidad
+      imagen
     }
   }
 `;
@@ -69,13 +72,16 @@ const ArtistaProfile = () => {
           <div
             className="w-24 h-24 bg-cover rounded-full shadow-lg"
             style={{
-              backgroundImage: `url('https://via.placeholder.com/150')`,
+              backgroundImage: `url(data:image/jpeg;base64,${data.obtenerArtistaClick.imagen})`,
             }}
           />
           <div>
-            <h1 className="text-5xl font-extrabold text-orange-600 mb-2">
-              {data.obtenerArtistaClick.nombre}
-            </h1>
+            {data?.obtenerArtistaClick?.nombreArtistico && (
+              <h1 className="text-5xl font-extrabold text-orange-600 mb-2">
+                {data.obtenerArtistaClick.nombreArtistico}
+              </h1>
+            )}
+
             <p className="text-lg text-orange-600">
               {data.obtenerArtistaClick.especialidad}
             </p>
@@ -85,11 +91,11 @@ const ArtistaProfile = () => {
         <div className="mt-6 text-gray-800 space-y-4">
           <p>
             <span className="font-semibold">Apellido:</span>{" "}
-            {data.obtenerArtistaClick.apellidoP}
-          </p>
-          <p>
-            <span className="font-semibold">Género:</span>{" "}
-            {data.obtenerArtistaClick.genero}
+            {data.obtenerArtistaClick.nombre +
+              " " +
+              data.obtenerArtistaClick.apellidoP +
+              " " +
+              data.obtenerArtistaClick.apellidoM}
           </p>
           <p>
             <span className="font-semibold">Email:</span>{" "}
@@ -107,11 +113,15 @@ const ArtistaProfile = () => {
             <span className="font-semibold">Descripción:</span>{" "}
             {data.obtenerArtistaClick.descripcion || "No disponible"}
           </p>
+          <p>
+            <span className="font-semibold">id:</span>{" "}
+            {data.obtenerArtistaClick.id}
+          </p>
         </div>
 
         <div className="mt-10">
           <h2 className="text-3xl font-semibold text-orange-600 mb-4">
-            Posts del Artista
+            Posts de {data.obtenerArtistaClick.nombreArtistico}
           </h2>
           {postsData.obtenerPostsClick.length === 0 ? (
             <p className="text-center text-gray-500">
@@ -129,7 +139,7 @@ const ArtistaProfile = () => {
                   </h3>
                   {post.imagen && (
                     <img
-                      src={post.imagen}
+                      src={`data:image/jpeg;base64,${post.imagen}`}
                       alt={post.titulo}
                       className="mt-4 w-full h-64 object-cover rounded-lg shadow-md"
                     />
